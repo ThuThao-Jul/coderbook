@@ -13,6 +13,7 @@ postController.create = catchAsync(async (req, res) => {
   res.json(post);
 });
 
+
 postController.read = catchAsync(async (req, res, next) => {
   const post = await Post.findOne({ _id: req.params.id });
   if (!post)
@@ -51,13 +52,14 @@ postController.destroy = catchAsync(async (req, res) => {
 });
 
 postController.list = catchAsync(async (req, res) => {
+  const posts = await Post.find({}).populate('owner')
   return sendResponse(
     res,
     200,
     true,
-    { posts: [{ foo: "bar" }] },
+    { posts },
     null,
-    "Login successful"
+    "Received posts."
   );
 });
 

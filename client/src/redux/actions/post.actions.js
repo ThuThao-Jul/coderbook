@@ -2,7 +2,7 @@ import * as types from "../constants/post.constants";
 import api from "../api";
 import { toast } from "react-toastify";
 
-const createPost = (body, images) => async (dispatch) => {
+const createPost = (body) => async (dispatch) => {
   dispatch({ type: types.CREATE_POST_REQUEST, payload: null });
   try {
     // For uploading file manually
@@ -17,7 +17,7 @@ const createPost = (body, images) => async (dispatch) => {
     // const res = await api.post("/posts", formData);
 
     // Upload images using cloudinary already
-    const res = await api.post("/posts", { body, images });
+    const res = await api.post("/posts", { body});
 
     dispatch({
       payload: res.data.data,
@@ -26,6 +26,7 @@ const createPost = (body, images) => async (dispatch) => {
     toast.success("Post created");
   } catch (error) {
     dispatch({ type: types.CREATE_POST_FAILURE, payload: error });
+    toast.error(error.message)
   }
 };
 
@@ -50,7 +51,7 @@ const postsRequest =
       );
       dispatch({
         type: types.POST_REQUEST_SUCCESS,
-        payload: res.data.data,
+        payload: res.data.data.posts,
       });
     } catch (error) {
       dispatch({ type: types.POST_REQUEST_FAILURE, payload: error });

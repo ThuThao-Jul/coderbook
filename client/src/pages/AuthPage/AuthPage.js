@@ -25,6 +25,7 @@ export default function RegisterPage() {
 
   const [user, setUser] = useState({ email: "", password: "" });
   const [show, setShow] = useState(false);
+  console.log(user)
 
   const onToggleModal = (e) => {
     e.preventDefault();
@@ -41,6 +42,17 @@ export default function RegisterPage() {
   };
 
   if (isAuthenticated) return <Redirect to="/" />;
+
+  const onChangeEmail = (e) => {
+    setUser({...user, email: e.target.value});
+  }
+  const onChangePassword =(e) => {
+    setUser({...user, password: e.target.value});
+  }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(authActions.register(null, user.email, user.password));
+  };
 
   return (
     <div>
@@ -125,11 +137,14 @@ export default function RegisterPage() {
         </Modal.Header>
         <Modal.Body>
           {/* STEP 1 */}
-          <Form className="d-flex flex-column justify-content-center">
+          <Form 
+          onSubmit ={onSubmit}
+          className="d-flex flex-column justify-content-center">
             <Form.Row>
               <Form.Group as={Col} controlId="email">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  onChange = {onChangeEmail}
                   type="email"
                   placeholder="Enter email"
                 />
@@ -137,6 +152,7 @@ export default function RegisterPage() {
               <Form.Group as={Col} controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  onChange = {onChangePassword}
                   type="password"
                   placeholder="Password"
                 />

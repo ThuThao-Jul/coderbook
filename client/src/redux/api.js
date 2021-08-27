@@ -22,6 +22,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => {
     console.log("Response:", response);
+    if (response.data.data) {
+    localStorage.setItem("accessToken", response.data.data.accessToken)};
     return response;
   },
   function (error) {

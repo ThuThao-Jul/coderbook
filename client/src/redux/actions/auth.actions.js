@@ -9,10 +9,10 @@ const loginRequest = (email, password) => async (dispatch) => {
     const name = res.data.data.user.name;
     dispatch({ type: types.LOGIN_SUCCESS, payload: res.data.data });
     toast.success(`Welcome ${name}`);
-    api.defaults.headers.common["authorization"] =
-      "Bearer " + res.data.data.accessToken;
+    // api.defaults.headers.common["authorization"] =
+    //   "Bearer " + res.data.data.accessToken;
 
-    localStorage.setItem("accessToken", res.data.data.accessToken);
+    // localStorage.setItem("accessToken", res.data.data.accessToken);
   } catch (error) {
     dispatch({ type: types.LOGIN_FAILURE, payload: error });
   }
